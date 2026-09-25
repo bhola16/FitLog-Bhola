@@ -9,13 +9,20 @@ interface WorkoutActionsProps {
 }
 
 const WorkoutActions = ({ workout }: WorkoutActionsProps) => {
-  const { addToPlan, saveForLater } = useFitLog();
+  const { addToPlan, saveForLater, plan } = useFitLog();
+
+  const isPlanFull = plan.length >= 5;
 
   return (
     <div className="mt-8 flex flex-col gap-3 sm:flex-row">
       <button
         onClick={() => addToPlan(workout)}
-        className="flex items-center justify-center gap-2 rounded-xl border border-transparent bg-[#ccff00] px-6 py-3 text-sm font-bold text-black transition duration-200 hover:scale-105 hover:border-white hover:bg-[#d4ff33] hover:shadow-lg"
+        disabled={isPlanFull}
+        className={`flex items-center justify-center gap-2 rounded-xl border px-6 py-3 text-sm font-bold transition duration-200 ${
+          isPlanFull
+            ? "cursor-not-allowed border-zinc-700 bg-zinc-800 text-zinc-500"
+            : "border-transparent bg-[#ccff00] text-black hover:scale-105 hover:border-white hover:bg-[#d4ff33] hover:shadow-lg"
+        }`}
       >
         <Plus size={18} />
         Add to today&apos;s plan
