@@ -1,21 +1,33 @@
 import { IWorkoutType } from "@/type/type";
+import WorkoutCard from "../shared/WorkOutCard";
 
 const getWorkOutsData = async (): Promise<IWorkoutType[]> => {
-  const res = await fetch("https://api.abcz.workers.dev/api/fitlog");
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const res = await fetch("https://api.abcz.workers.dev/api/fitlog");
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch workouts");
+      if (!res.ok) {
+        throw new Error("Failed to fetch workouts");
+      }
+
+      return res.json();
+    } catch (error) {
+      if (attempt === 3) {
+        throw error;
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
   }
 
-  const data = res.json();
-  return data;
+  throw new Error("Failed to fetch workouts");
 };
 
 const WorkoutLibrary = async () => {
   const workOutsDatas = await getWorkOutsData();
 
   return (
-    <section className="mx-4 my-10 sm:mx-6 bg-[#15171D] lg:mx-10">
+    <section className="mx-4 my-10 sm:mx-6 lg:mx-10">
       <div className="container mx-auto">
         {/* Section Header */}
         <div className="mb-8">
@@ -28,7 +40,12 @@ const WorkoutLibrary = async () => {
           </p>
         </div>
 
-        <h2>Workout card is heree...</h2>
+        {/* Workout Cards */}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {workOutsDatas.map((workOutData) => (
+            <WorkoutCard key={workOutData.id} workOutData={workOutData} />
+          ))}
+        </div>
       </div>
     </section>
   );
