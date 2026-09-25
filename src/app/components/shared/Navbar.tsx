@@ -35,7 +35,7 @@ const Navbar = () => {
           <Link
             href="/my-plan"
             className={`rounded-full px-5 py-2 font-medium transition ${
-              pathname === "/myplan"
+              pathname === "/my-plan"
                 ? "bg-[#ccff00]/20 text-[#ccff00]"
                 : "text-[#9CA3AF] hover:bg-[#ccff00]/5 hover:text-[#ccff00]"
             }`}
@@ -47,22 +47,26 @@ const Navbar = () => {
         <div className="flex items-center gap-3 sm:gap-5">
           <Link
             href="/my-plan"
-            className="flex items-center gap-2 font-medium text-white"
+            className="group flex items-center gap-2 font-medium text-white transition"
           >
-            <span className="hidden sm:inline">Plan</span>
+            <span className="hidden transition group-hover:text-[#ccff00] sm:inline">
+              Plan
+            </span>
 
-            <span className="rounded-full bg-[#ccff00] px-3 py-1 text-sm font-bold text-black">
+            <span className="rounded-full bg-[#ccff00] px-3 py-1 text-sm font-bold text-black transition group-hover:bg-[#d4ff33] group-hover:shadow-[0_0_10px_#ccff00]">
               {hydrated ? plan.length : 0}
             </span>
           </Link>
 
           <Link
             href="/my-plan"
-            className="flex items-center gap-2 font-medium text-white"
+            className="group flex items-center gap-2 font-medium text-white transition"
           >
-            <span className="hidden sm:inline">Saved</span>
+            <span className="hidden transition group-hover:text-[#ccff00] sm:inline">
+              Saved
+            </span>
 
-            <span className="rounded-full border border-white px-3 py-1 text-sm font-bold text-white">
+            <span className="rounded-full border border-white px-3 py-1 text-sm font-bold text-white transition group-hover:border-[#ccff00] group-hover:bg-[#ccff00]/10 group-hover:text-[#ccff00]">
               {hydrated ? saved.length : 0}
             </span>
           </Link>

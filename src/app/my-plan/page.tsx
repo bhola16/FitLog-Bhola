@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import MyPlanCard from "../components/shared/MyPlanCard";
@@ -13,13 +13,27 @@ const MyPlanPage = () => {
 
   const [activeTab, setActiveTab] = useState<"plan" | "saved">("plan");
 
+  // Search state
+  const [search, setSearch] = useState("");
+
   // Separate sorting state for each tab
   const [planSortBy, setPlanSortBy] = useState<SortOption>("duration");
-
   const [savedSortBy, setSavedSortBy] = useState<SortOption>("duration");
 
   // Get current tab list
   const currentList = activeTab === "plan" ? plan : saved;
+
+  // Filter by workout name or muscle group
+  const filteredList = currentList.filter((workout) => {
+    const searchText = search.toLowerCase();
+
+    return (
+      workout.name.toLowerCase().includes(searchText) ||
+      workout.muscleGroups.some((muscleGroup) =>
+        muscleGroup.toLowerCase().includes(searchText),
+      )
+    );
+  });
 
   // Get current tab's sorting option
   const sortBy = activeTab === "plan" ? planSortBy : savedSortBy;
@@ -36,8 +50,8 @@ const MyPlanPage = () => {
     0,
   );
 
-  // Sort current list
-  const sortedList = [...currentList].sort((a, b) => {
+  // Sort filtered list
+  const sortedList = [...filteredList].sort((a, b) => {
     switch (sortBy) {
       case "duration":
         return a.duration - b.duration;
@@ -83,7 +97,7 @@ const MyPlanPage = () => {
                 Exercises
               </p>
 
-              <p className="mt-2 text-3xl  font-bold text-[#CCFF00] sm:text-4xl">
+              <p className="mt-2 text-3xl font-bold text-[#CCFF00] sm:text-4xl">
                 {currentList.length}
               </p>
             </div>
@@ -168,15 +182,41 @@ const MyPlanPage = () => {
           </div>
         </div>
 
+        {/* Search */}
+        <div className="mb-6 flex justify-end">
+          <div className="relative w-full sm:max-w-md">
+            <input
+              type="text"
+              placeholder="Search workouts by name or muscle group..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full rounded-xl border border-zinc-700 bg-[#171a20] px-4 py-3 pr-12 text-sm text-white outline-none placeholder:text-[#8A92A0] transition focus:border-[#ccff00]"
+            />
+
+            {search && (
+              <button
+                type="button"
+                onClick={() => setSearch("")}
+                className="absolute right-3 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full border border-zinc-700 bg-[#171a20] text-zinc-400 transition duration-200 hover:border-[#ccff00] hover:bg-[#ccff00]/10 hover:text-[#ccff00]"
+                aria-label="Clear search"
+              >
+                <X size={15} strokeWidth={2.5} />
+              </button>
+            )}
+          </div>
+        </div>
+
         {/* Empty State */}
         {sortedList.length === 0 ? (
           <div className="rounded-2xl border border-zinc-800 bg-[#111317] px-6 py-20 text-center">
             <h2 className="text-3xl font-bold uppercase text-white">
-              Nothing Here Yet
+              {search ? "No Workouts Found" : "Nothing Here Yet"}
             </h2>
 
             <p className="mt-3 text-[#A1A1A1]">
-              Browse the library and add a lift to get today moving.
+              {search
+                ? "Try searching with another workout name or muscle group."
+                : "Browse the library and add a lift to get today moving."}
             </p>
 
             <Link
