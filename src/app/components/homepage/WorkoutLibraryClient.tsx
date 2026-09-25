@@ -32,17 +32,17 @@ const WorkoutLibraryClient = ({ workouts }: WorkoutLibraryClientProps) => {
             placeholder="Search workouts by name or muscle group..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full rounded-xl border border-zinc-700 bg-[#0d0f12] px-4 py-3 pr-10 text-white outline-none placeholder:text-zinc-500 focus:border-[#ccff00]"
+            className="w-full rounded-xl border border-zinc-700 bg-[#0d0f12] px-4 py-3 pr-12 text-white outline-none transition duration-200 placeholder:text-zinc-500 hover:border-zinc-500 focus:border-[#ccff00] focus:ring-2 focus:ring-[#ccff00]/10"
           />
 
           {search && (
             <button
               type="button"
               onClick={() => setSearch("")}
-              className="absolute right-3 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full border border-zinc-700 bg-[#171a20] text-zinc-400 transition duration-200 hover:border-[#ccff00] hover:bg-[#ccff00]/10 hover:text-[#ccff00]"
+              className="absolute right-3 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-zinc-700 bg-[#171a20] text-zinc-400 transition duration-200 hover:scale-110 hover:border-[#ccff00] hover:bg-[#ccff00]/10 hover:text-[#ccff00]"
               aria-label="Clear search"
             >
-              <X size={15} strokeWidth={2.5} />
+              <X size={18} strokeWidth={2.5} />
             </button>
           )}
         </div>

@@ -1,3 +1,4 @@
+
 import { IWorkoutType } from "@/type/type";
 import WorkoutLibraryClient from "./WorkoutLibraryClient";
 
@@ -27,14 +28,14 @@ const WorkoutLibrary = async () => {
   const workOutsDatas = await getWorkOutsData();
 
   return (
-    <section className="mx-4 my-10 sm:mx-6 lg:mx-10">
+    <section className="mx-4 my-8 sm:mx-6 sm:my-10 lg:mx-10 lg:my-14">
       <div className="container mx-auto">
-        <div className="mb-8">
-          <h2 className="mb-1 text-4xl font-bold uppercase text-white">
+        <div className="mb-6 sm:mb-8">
+          <h2 className="mb-1 text-3xl font-bold uppercase text-white sm:text-4xl">
             The Library
           </h2>
 
-          <p className="text-[#9CA3AF]">
+          <p className="text-sm text-[#9CA3AF] sm:text-base">
             Twelve lifts covering every major muscle group.
           </p>
         </div>

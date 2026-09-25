@@ -8,9 +8,17 @@ const Footer = () => {
       <div className="container mx-auto flex flex-col items-center justify-between gap-4 px-6 py-5 sm:flex-row sm:px-10">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <Image src={logo} alt="FitLog logo" width={40} height={30} />
+          <Image
+            src={logo}
+            alt="FitLog logo"
+            width={40}
+            height={30}
+            className="transition duration-200 hover:scale-110 hover:opacity-90"
+          />
 
-          <span className="text-xl font-bold text-white">FITLOG</span>
+          <span className="text-xl font-bold text-white transition duration-200 hover:text-[#ccff00] hover:tracking-wide">
+            FITLOG
+          </span>
         </Link>
 
         {/* Copyright */}

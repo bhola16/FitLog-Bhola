@@ -3,6 +3,7 @@
 import { ChevronDown, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { Bounce, toast } from "react-toastify";
 import MyPlanCard from "../components/shared/MyPlanCard";
 import { useFitLog } from "../contex/FitLogContex";
 
@@ -74,6 +75,19 @@ const MyPlanPage = () => {
     } else {
       setSavedSortBy(value);
     }
+
+    const sortName = value.charAt(0).toUpperCase() + value.slice(1);
+
+    toast.success(`Sorted by ${sortName}`, {
+      position: "bottom-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      theme: "light",
+      transition: Bounce,
+    });
   };
 
   return (
@@ -81,45 +95,47 @@ const MyPlanPage = () => {
       <div className="container mx-auto">
         {/* Page Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold uppercase text-white">My Plan</h1>
+          <h1 className="text-4xl font-bold uppercase text-white transition duration-300 hover:text-[#ccff00]">
+            My Plan
+          </h1>
 
-          <p className="mt-2 text-[#8A92A0]">
+          <p className="mt-2 text-[#8A92A0] transition duration-300 hover:text-white">
             Cap of five lifts for today. Finish them, then load more.
           </p>
         </div>
 
         {/* Metrics Summary */}
-        <div className="mb-8 rounded-2xl border border-zinc-800 bg-[#171a20]">
+        <div className="mb-8 overflow-hidden rounded-2xl border border-zinc-800 bg-[#171a20] transition duration-300 hover:border-zinc-600">
           <div className="grid grid-cols-3 divide-x divide-zinc-800">
             {/* Exercises */}
-            <div className="p-4 text-center sm:p-5">
-              <p className="text-xs uppercase text-[#8A92A0] sm:text-sm">
+            <div className="group cursor-default p-4 text-center transition duration-300 hover:bg-[#ccff00]/5 sm:p-5">
+              <p className="text-xs uppercase text-[#8A92A0] transition duration-200 group-hover:text-[#ccff00] sm:text-sm">
                 Exercises
               </p>
 
-              <p className="mt-2 text-3xl font-bold text-[#CCFF00] sm:text-4xl">
+              <p className="mt-2 text-3xl font-bold text-[#CCFF00] transition duration-300 group-hover:scale-110 sm:text-4xl">
                 {currentList.length}
               </p>
             </div>
 
             {/* Minutes */}
-            <div className="p-4 text-center sm:p-5">
-              <p className="text-xs uppercase text-[#8A92A0] sm:text-sm">
+            <div className="group cursor-default p-4 text-center transition duration-300 hover:bg-[#ccff00]/5 sm:p-5">
+              <p className="text-xs uppercase text-[#8A92A0] transition duration-200 group-hover:text-[#ccff00] sm:text-sm">
                 Minutes
               </p>
 
-              <p className="mt-2 text-3xl font-bold text-white sm:text-4xl">
+              <p className="mt-2 text-3xl font-bold text-white transition duration-300 group-hover:scale-110 group-hover:text-[#ccff00] sm:text-4xl">
                 {totalMinutes}
               </p>
             </div>
 
             {/* Calories */}
-            <div className="p-4 text-center sm:p-5">
-              <p className="text-xs uppercase text-[#8A92A0] sm:text-sm">
+            <div className="group cursor-default p-4 text-center transition duration-300 hover:bg-[#ccff00]/5 sm:p-5">
+              <p className="text-xs uppercase text-[#8A92A0] transition duration-200 group-hover:text-[#ccff00] sm:text-sm">
                 Calories
               </p>
 
-              <p className="mt-2 text-3xl font-bold text-white sm:text-4xl">
+              <p className="mt-2 text-3xl font-bold text-white transition duration-300 group-hover:scale-110 group-hover:text-[#ccff00] sm:text-4xl">
                 {totalCalories}
               </p>
             </div>
@@ -129,13 +145,13 @@ const MyPlanPage = () => {
         {/* Tabs + Sort */}
         <div className="mb-8 flex flex-col gap-4 rounded-2xl p-2 sm:flex-row sm:items-center sm:justify-between">
           {/* Tabs */}
-          <div className="flex gap-4 rounded-2xl border border-[#8A92A0]/30 px-4 py-2">
+          <div className="flex gap-4 rounded-2xl border border-[#8A92A0]/30 px-4 py-2 transition duration-300 hover:border-[#ccff00]/40">
             <button
               onClick={() => setActiveTab("plan")}
-              className={`rounded-2xl border px-8 py-2 text-sm font-bold uppercase transition ${
+              className={`rounded-2xl border px-8 py-2 text-sm font-bold uppercase transition duration-200 hover:-translate-y-0.5 ${
                 activeTab === "plan"
-                  ? "border-[#ccff00] text-[#ccff00]"
-                  : "border-zinc-700 text-[#8A92A0] hover:border-zinc-500 hover:text-white"
+                  ? "border-[#ccff00] bg-[#ccff00]/10 text-[#ccff00] shadow-[0_0_15px_rgba(204,255,0,0.08)]"
+                  : "border-zinc-700 text-[#8A92A0] hover:border-white hover:bg-white/5 hover:text-white"
               }`}
             >
               Today&apos;s Plan
@@ -143,10 +159,10 @@ const MyPlanPage = () => {
 
             <button
               onClick={() => setActiveTab("saved")}
-              className={`rounded-2xl border px-8 py-2 text-sm font-bold uppercase transition ${
+              className={`rounded-2xl border px-8 py-2 text-sm font-bold uppercase transition duration-200 hover:-translate-y-0.5 ${
                 activeTab === "saved"
-                  ? "border-[#ccff00] text-[#ccff00]"
-                  : "border-zinc-700 text-[#8A92A0] hover:border-zinc-500 hover:text-white"
+                  ? "border-[#ccff00] bg-[#ccff00]/10 text-[#ccff00] shadow-[0_0_15px_rgba(204,255,0,0.08)]"
+                  : "border-zinc-700 text-[#8A92A0] hover:border-white hover:bg-white/5 hover:text-white"
               }`}
             >
               Saved
@@ -157,47 +173,54 @@ const MyPlanPage = () => {
           <div className="flex items-center gap-3">
             <label
               htmlFor="sort"
-              className="text-sm font-medium text-[#8A92A0]"
+              className="text-sm font-medium text-[#8A92A0] transition duration-200 hover:text-white"
             >
               Sort By
             </label>
-
-            <div className="relative">
+            <div className="group relative">
               <select
                 id="sort"
                 value={sortBy}
                 onChange={(e) => handleSortChange(e.target.value as SortOption)}
-                className="appearance-none rounded-xl border border-zinc-700 bg-[#171a20] py-3 pl-4 pr-10 text-sm font-medium text-white outline-none transition focus:border-[#ccff00]"
+                className="appearance-none rounded-xl border border-zinc-600 bg-[#171a20] py-3 pl-4 pr-10 text-sm font-medium text-white outline-none transition duration-200 hover:border-[#ccff00]/60 hover:bg-[#ccff00]/5 focus:border-[#ccff00] focus:ring-2 focus:ring-[#ccff00]/10"
               >
-                <option value="duration">Duration</option>
-                <option value="calories">Calories</option>
-                <option value="rating">Rating</option>
+                <option value="duration" className="bg-[#171a20] text-white">
+                  Duration
+                </option>
+                <option value="calories" className="bg-[#171a20] text-white">
+                  Calories
+                </option>
+                <option value="rating" className="bg-[#171a20] text-white">
+                  Rating
+                </option>
               </select>
 
               <ChevronDown
                 size={16}
-                className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#8A92A0]"
+                className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#8A92A0] transition duration-200 group-hover:text-[#ccff00]"
               />
             </div>
           </div>
+
+          {/* //// */}
         </div>
 
         {/* Search */}
         <div className="mb-6 flex justify-end">
-          <div className="relative w-full sm:max-w-md">
+          <div className="group relative w-full sm:max-w-md">
             <input
               type="text"
               placeholder="Search workouts by name or muscle group..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-xl border border-zinc-700 bg-[#171a20] px-4 py-3 pr-12 text-sm text-white outline-none placeholder:text-[#8A92A0] transition focus:border-[#ccff00]"
+              className="w-full rounded-xl border border-zinc-700 bg-[#171a20] px-4 py-4 pr-12 text-sm text-white outline-none placeholder:text-[#8A92A0] transition duration-300 hover:border-zinc-500 hover:bg-[#1b1f26] focus:border-[#ccff00] focus:bg-[#171a20] focus:ring-2 focus:ring-[#ccff00]/10"
             />
 
             {search && (
               <button
                 type="button"
                 onClick={() => setSearch("")}
-                className="absolute right-3 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full border border-zinc-700 bg-[#171a20] text-zinc-400 transition duration-200 hover:border-[#ccff00] hover:bg-[#ccff00]/10 hover:text-[#ccff00]"
+                className="absolute right-3 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-zinc-700 bg-[#171a20] text-zinc-400 transition duration-200 hover:scale-110 hover:border-[#ccff00] hover:bg-[#ccff00]/10 hover:text-[#ccff00]"
                 aria-label="Clear search"
               >
                 <X size={15} strokeWidth={2.5} />
@@ -208,8 +231,8 @@ const MyPlanPage = () => {
 
         {/* Empty State */}
         {sortedList.length === 0 ? (
-          <div className="rounded-2xl border border-zinc-800 bg-[#111317] px-6 py-20 text-center">
-            <h2 className="text-3xl font-bold uppercase text-white">
+          <div className="rounded-2xl border border-zinc-800 bg-[#111317] px-6 py-20 text-center transition duration-300 hover:border-zinc-600">
+            <h2 className="text-3xl font-bold uppercase text-white transition duration-300 hover:text-[#ccff00]">
               {search ? "No Workouts Found" : "Nothing Here Yet"}
             </h2>
 
@@ -221,7 +244,7 @@ const MyPlanPage = () => {
 
             <Link
               href="/workouts"
-              className="mt-8 inline-block rounded-4xl border border-transparent bg-[#ccff00] px-6 py-3 text-sm font-bold text-black transition duration-200 hover:border-white hover:bg-[#d4ff33]"
+              className="mt-8 inline-block rounded-4xl border border-transparent bg-[#ccff00] px-8 py-3 text-sm font-bold text-black transition duration-200 hover:-translate-y-1 hover:border-white hover:bg-[#d4ff33] hover:shadow-[0_8px_20px_rgba(204,255,0,0.2)]"
             >
               Go to workouts
             </Link>
@@ -234,7 +257,7 @@ const MyPlanPage = () => {
                 key={workout.id}
                 workout={workout}
                 activeTab={activeTab}
-              ></MyPlanCard>
+              />
             ))}
           </div>
         )}
