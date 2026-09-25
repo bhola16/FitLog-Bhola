@@ -1,7 +1,13 @@
 "use client";
 
 import { IWorkoutType } from "@/type/type";
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { Bounce, toast } from "react-toastify";
 
 interface FitLogContextType {
@@ -35,19 +41,24 @@ const toastOptions = {
 };
 
 export const FitLogProvider = ({ children }: FitLogProviderProps) => {
-  const [plan, setPlan] = useState<IWorkoutType[]>(() => {
-    if (typeof window === "undefined") return [];
+  const [plan, setPlan] = useState<IWorkoutType[]>([]);
+  const [saved, setSaved] = useState<IWorkoutType[]>([]);
+  const [hydrated, setHydrated] = useState(false);
 
+  useEffect(() => {
     const savedPlan = localStorage.getItem("fitlog-plan");
-    return savedPlan ? JSON.parse(savedPlan) : [];
-  });
-  const [saved, setSaved] = useState<IWorkoutType[]>(() => {
-    if (typeof window === "undefined") return [];
-
     const savedWorkouts = localStorage.getItem("fitlog-saved");
-    return savedWorkouts ? JSON.parse(savedWorkouts) : [];
-  });
-  const hydrated = true;
+
+    if (savedPlan) {
+      setPlan(JSON.parse(savedPlan));
+    }
+
+    if (savedWorkouts) {
+      setSaved(JSON.parse(savedWorkouts));
+    }
+
+    setHydrated(true);
+  }, []);
 
   const addToPlan = (workout: IWorkoutType) => {
     const alreadyAdded = plan.some((item) => item.id === workout.id);

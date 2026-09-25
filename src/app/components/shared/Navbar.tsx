@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 const Navbar = () => {
   const pathname = usePathname();
 
-  const { plan, saved } = useFitLog();
+  const { plan, saved, hydrated } = useFitLog();
 
   return (
     <header className="border-b border-zinc-100/50 bg-[#0d0f12]">
@@ -52,7 +52,7 @@ const Navbar = () => {
             <span className="hidden sm:inline">Plan</span>
 
             <span className="rounded-full bg-[#ccff00] px-3 py-1 text-sm font-bold text-black">
-              {plan.length}
+              {hydrated ? plan.length : 0}
             </span>
           </Link>
 
@@ -63,7 +63,7 @@ const Navbar = () => {
             <span className="hidden sm:inline">Saved</span>
 
             <span className="rounded-full border border-white px-3 py-1 text-sm font-bold text-white">
-              {saved.length}
+              {hydrated ? saved.length : 0}
             </span>
           </Link>
         </div>
