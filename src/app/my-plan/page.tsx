@@ -3,6 +3,7 @@
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import MyPlanCard from "../components/shared/MyPlanCard";
 import { useFitLog } from "../contex/FitLogContex";
 
 type SortOption = "duration" | "calories" | "rating";
@@ -188,7 +189,13 @@ const MyPlanPage = () => {
         ) : (
           /* Workout Cards */
           <div className="grid grid-cols-1 gap-5">
-            <h2>Here is the plan card..</h2>
+            {sortedList.map((workout) => (
+              <MyPlanCard
+                key={workout.id}
+                workout={workout}
+                activeTab={activeTab}
+              ></MyPlanCard>
+            ))}
           </div>
         )}
       </div>

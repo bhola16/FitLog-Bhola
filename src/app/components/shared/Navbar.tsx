@@ -33,7 +33,7 @@ const Navbar = () => {
           </Link>
 
           <Link
-            href="/myplan"
+            href="/my-plan"
             className={`rounded-full px-5 py-2 font-medium transition ${
               pathname === "/myplan"
                 ? "bg-[#ccff00]/20 text-[#ccff00]"
@@ -46,7 +46,7 @@ const Navbar = () => {
 
         <div className="flex items-center gap-3 sm:gap-5">
           <Link
-            href="/myplan"
+            href="/my-plan"
             className="flex items-center gap-2 font-medium text-white"
           >
             <span className="hidden sm:inline">Plan</span>
@@ -57,7 +57,7 @@ const Navbar = () => {
           </Link>
 
           <Link
-            href="/myplan"
+            href="/my-plan"
             className="flex items-center gap-2 font-medium text-white"
           >
             <span className="hidden sm:inline">Saved</span>
