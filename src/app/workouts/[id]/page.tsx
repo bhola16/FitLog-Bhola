@@ -1,5 +1,7 @@
 import { IWorkoutType } from "@/type/type";
 import Image from "next/image";
+import { notFound } from "next/navigation";
+import WorkoutActions from "../WorkoutActions";
 
 interface IWorkoutDetailsPageProps {
   params: Promise<{
@@ -9,6 +11,11 @@ interface IWorkoutDetailsPageProps {
 
 const getWorkout = async (id: string): Promise<IWorkoutType> => {
   const res = await fetch(`https://api.abcz.workers.dev/api/fitlog/${id}`);
+
+  if (!res.ok) {
+    notFound();
+  }
+
   return res.json();
 };
 
@@ -18,11 +25,11 @@ const WorkoutDetailsPage = async ({ params }: IWorkoutDetailsPageProps) => {
   const workout = await getWorkout(id);
 
   return (
-    <main className="mx-4 my-10  sm:mx-6 lg:mx-10">
-      <div className="container bg-[#0F1115] rounded-2xl mx-auto p-5">
+    <main className="mx-4 my-10 sm:mx-6 lg:mx-10">
+      <div className="container mx-auto">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
           {/* Left Side - Image */}
-          <div className="relative min-h-100 overflow-hidden rounded-2xl border border-zinc-800 bg-[#171a20] lg:min-h-[650px]">
+          <div className="relative min-h-[400px] overflow-hidden rounded-2xl border border-zinc-800 bg-[#171a20] lg:min-h-[650px]">
             <Image
               src={workout.image}
               alt={workout.name}
@@ -128,6 +135,8 @@ const WorkoutDetailsPage = async ({ params }: IWorkoutDetailsPageProps) => {
                 ))}
               </ol>
             </div>
+
+            <WorkoutActions />
           </div>
         </div>
       </div>
