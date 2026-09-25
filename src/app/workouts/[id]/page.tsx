@@ -11,6 +11,7 @@ interface IWorkoutDetailsPageProps {
 
 const getWorkout = async (id: string): Promise<IWorkoutType> => {
   const res = await fetch(`https://api.abcz.workers.dev/api/fitlog/${id}`);
+  
 
   if (!res.ok) {
     notFound();
@@ -40,10 +41,12 @@ const WorkoutDetailsPage = async ({ params }: IWorkoutDetailsPageProps) => {
 
           {/* Right Side - Details */}
           <div className="text-white">
+            {/* Title */}
             <h1 className="mb-4 text-4xl font-bold uppercase sm:text-5xl">
               {workout.name}
             </h1>
 
+            {/* Description */}
             <p className="mb-6 text-lg leading-7 text-[#9CA3AF]">
               {workout.description}
             </p>
@@ -136,7 +139,8 @@ const WorkoutDetailsPage = async ({ params }: IWorkoutDetailsPageProps) => {
               </ol>
             </div>
 
-            <WorkoutActions />
+            {/* Actions */}
+            <WorkoutActions workout={workout} />
           </div>
         </div>
       </div>

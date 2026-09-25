@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { ToastContainer } from "react-toastify";
 import Footer from "./components/shared/Footer";
 import Navbar from "./components/shared/Navbar";
 import { FitLogProvider } from "./contex/FitLogContex";
@@ -30,8 +31,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <FitLogProvider>
           <Navbar></Navbar>
+
           {children}
           <Footer></Footer>
+
+          <ToastContainer />
         </FitLogProvider>
       </body>
     </html>

@@ -1,4 +1,6 @@
 "use client";
+
+import { useFitLog } from "@/app/contex/FitLogContex";
 import logo from "@/assets/logo.png";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,6 +8,8 @@ import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const pathname = usePathname();
+
+  const { plan, saved } = useFitLog();
 
   return (
     <header className="border-b border-zinc-100/50 bg-[#0d0f12]">
@@ -48,7 +52,7 @@ const Navbar = () => {
             <span className="hidden sm:inline">Plan</span>
 
             <span className="rounded-full bg-[#ccff00] px-3 py-1 text-sm font-bold text-black">
-              0
+              {plan.length}
             </span>
           </Link>
 
@@ -59,7 +63,7 @@ const Navbar = () => {
             <span className="hidden sm:inline">Saved</span>
 
             <span className="rounded-full border border-white px-3 py-1 text-sm font-bold text-white">
-              0
+              {saved.length}
             </span>
           </Link>
         </div>
