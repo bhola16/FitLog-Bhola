@@ -1,6 +1,7 @@
 import { IWorkoutType } from "@/type/type";
 import { Clock3, Flame, Star } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface IWorkoutCardProps {
   workOutData: IWorkoutType;
@@ -8,7 +9,10 @@ interface IWorkoutCardProps {
 
 const WorkoutCard = ({ workOutData }: IWorkoutCardProps) => {
   return (
-    <div className="block overflow-hidden rounded-2xl border border-zinc-800 bg-[#171a20] transition hover:border-[#ccff00]">
+    <Link
+      href={`/workouts/${workOutData.id}`}
+      className="block overflow-hidden rounded-2xl border border-zinc-800 bg-[#171a20] transition hover:border-[#ccff00]"
+    >
       {/* Image */}
       <div className="relative h-52 w-full">
         <Image
@@ -64,7 +68,7 @@ const WorkoutCard = ({ workOutData }: IWorkoutCardProps) => {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
