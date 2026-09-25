@@ -236,7 +236,7 @@ const MyPlanPage = () => {
               {search ? "No Workouts Found" : "Nothing Here Yet"}
             </h2>
 
-            <p className="mt-3 text-[#A1A1A1]">
+            <p className="mt-4 text-[#A1A1A1] hover:text-[#ccff00]">
               {search
                 ? "Try searching with another workout name or muscle group."
                 : "Browse the library and add a lift to get today moving."}
