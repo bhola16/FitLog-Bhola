@@ -1,14 +1,8 @@
 "use client";
 
 import { IWorkoutType } from "@/type/type";
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import { toast } from "react-toastify";
+import { createContext, ReactNode, useContext, useState } from "react";
+import { Bounce, toast } from "react-toastify";
 
 interface FitLogContextType {
   plan: IWorkoutType[];
@@ -28,36 +22,46 @@ interface FitLogProviderProps {
   children: ReactNode;
 }
 
+const toastOptions = {
+  position: "top-right" as const,
+  autoClose: 2500,
+  hideProgressBar: false,
+  closeOnClick: false,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "light" as const,
+  transition: Bounce,
+};
+
 export const FitLogProvider = ({ children }: FitLogProviderProps) => {
-  const [plan, setPlan] = useState<IWorkoutType[]>([]);
-  const [saved, setSaved] = useState<IWorkoutType[]>([]);
-  const [hydrated, setHydrated] = useState(false);
+  const [plan, setPlan] = useState<IWorkoutType[]>(() => {
+    if (typeof window === "undefined") return [];
 
-  useEffect(() => {
     const savedPlan = localStorage.getItem("fitlog-plan");
+    return savedPlan ? JSON.parse(savedPlan) : [];
+  });
+  const [saved, setSaved] = useState<IWorkoutType[]>(() => {
+    if (typeof window === "undefined") return [];
+
     const savedWorkouts = localStorage.getItem("fitlog-saved");
-
-    if (savedPlan) {
-      setPlan(JSON.parse(savedPlan).filter(Boolean));
-    }
-
-    if (savedWorkouts) {
-      setSaved(JSON.parse(savedWorkouts).filter(Boolean));
-    }
-
-    setHydrated(true);
-  }, []);
+    return savedWorkouts ? JSON.parse(savedWorkouts) : [];
+  });
+  const hydrated = true;
 
   const addToPlan = (workout: IWorkoutType) => {
-    const alreadyAdded = plan.some((item) => item?.id === workout.id);
+    const alreadyAdded = plan.some((item) => item.id === workout.id);
 
     if (alreadyAdded) {
-      toast.warning(`${workout.name} is already in today's plan.`);
+      toast.warning(
+        `${workout.name} is already in today's plan.`,
+        toastOptions,
+      );
       return;
     }
 
     if (plan.length >= 5) {
-      toast.error("You can add a maximum of 5 workouts.");
+      toast.error("You can add a maximum of 5 workouts.", toastOptions);
       return;
     }
 
@@ -66,14 +70,14 @@ export const FitLogProvider = ({ children }: FitLogProviderProps) => {
     setPlan(updatedPlan);
     localStorage.setItem("fitlog-plan", JSON.stringify(updatedPlan));
 
-    toast.success(`${workout.name} is added to today's plan`);
+    toast.success(`${workout.name} is added to today's plan`, toastOptions);
   };
 
   const saveForLater = (workout: IWorkoutType) => {
-    const alreadySaved = saved.some((item) => item?.id === workout.id);
+    const alreadySaved = saved.some((item) => item.id === workout.id);
 
     if (alreadySaved) {
-      toast.warning(`${workout.name} is already saved.`);
+      toast.warning(`${workout.name} is already saved.`, toastOptions);
       return;
     }
 
@@ -82,25 +86,21 @@ export const FitLogProvider = ({ children }: FitLogProviderProps) => {
     setSaved(updatedSaved);
     localStorage.setItem("fitlog-saved", JSON.stringify(updatedSaved));
 
-    toast.success(`${workout.name} saved for later`);
+    toast.success(`${workout.name} saved for later`, toastOptions);
   };
 
   const removeFromPlan = (id: number) => {
-    const updatedPlan = plan.filter((workout) => workout?.id !== id);
+    const updatedPlan = plan.filter((workout) => workout.id !== id);
 
     setPlan(updatedPlan);
     localStorage.setItem("fitlog-plan", JSON.stringify(updatedPlan));
-
-    toast.success("Workout removed from today's plan");
   };
 
   const removeFromSaved = (id: number) => {
-    const updatedSaved = saved.filter((workout) => workout?.id !== id);
+    const updatedSaved = saved.filter((workout) => workout.id !== id);
 
     setSaved(updatedSaved);
     localStorage.setItem("fitlog-saved", JSON.stringify(updatedSaved));
-
-    toast.success("Workout removed from saved");
   };
 
   return (
