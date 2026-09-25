@@ -1,0 +1,52 @@
+"use client";
+
+import { IWorkoutType } from "@/type/type";
+import { useState } from "react";
+import WorkoutCard from "../shared/WorkOutCard";
+
+interface WorkoutLibraryClientProps {
+  workouts: IWorkoutType[];
+}
+
+const WorkoutLibraryClient = ({ workouts }: WorkoutLibraryClientProps) => {
+  const [search, setSearch] = useState("");
+
+  const filteredWorkouts = workouts.filter((workout) => {
+    const searchText = search.toLowerCase();
+
+    return (
+      workout.name.toLowerCase().includes(searchText) ||
+      workout.muscleGroups.some((muscleGroup) =>
+        muscleGroup.toLowerCase().includes(searchText),
+      )
+    );
+  });
+
+  return (
+    <>
+      <div className="mb-8">
+        <input
+          type="text"
+          placeholder="Search workouts by name or muscle group..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full rounded-xl border border-zinc-700 bg-[#0d0f12] px-4 py-3 text-white outline-none placeholder:text-zinc-500 focus:border-[#ccff00]"
+        />
+      </div>
+
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+        {filteredWorkouts.length > 0 ? (
+          filteredWorkouts.map((workOutData) => (
+            <WorkoutCard key={workOutData.id} workOutData={workOutData} />
+          ))
+        ) : (
+          <div className="col-span-full py-12 text-center text-zinc-400">
+            No workouts found.
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
+
+export default WorkoutLibraryClient;

@@ -1,5 +1,5 @@
 import { IWorkoutType } from "@/type/type";
-import WorkoutCard from "../shared/WorkOutCard";
+import WorkoutLibraryClient from "./WorkoutLibraryClient";
 
 const getWorkOutsData = async (): Promise<IWorkoutType[]> => {
   for (let attempt = 1; attempt <= 3; attempt++) {
@@ -29,7 +29,6 @@ const WorkoutLibrary = async () => {
   return (
     <section className="mx-4 my-10 sm:mx-6 lg:mx-10">
       <div className="container mx-auto">
-        {/* Section Header */}
         <div className="mb-8">
           <h2 className="mb-1 text-4xl font-bold uppercase text-white">
             The Library
@@ -40,12 +39,7 @@ const WorkoutLibrary = async () => {
           </p>
         </div>
 
-        {/* Workout Cards */}
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {workOutsDatas.map((workOutData) => (
-            <WorkoutCard key={workOutData.id} workOutData={workOutData} />
-          ))}
-        </div>
+        <WorkoutLibraryClient workouts={workOutsDatas} />
       </div>
     </section>
   );
