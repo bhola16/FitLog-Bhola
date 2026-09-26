@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, ChevronDown, X } from "lucide-react";
+import { ChevronDown, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { Bounce, toast } from "react-toastify";
@@ -10,7 +10,7 @@ import { useFitLog } from "../contex/FitLogContex";
 type SortOption = "duration" | "calories" | "rating";
 
 const MyPlanPage = () => {
-  const { plan, saved, loading } = useFitLog();
+  const { plan, saved, hydrated } = useFitLog();
 
   const [activeTab, setActiveTab] = useState<"plan" | "saved">("plan");
 
@@ -21,10 +21,10 @@ const MyPlanPage = () => {
 
   const [savedSortBy, setSavedSortBy] = useState<SortOption>("duration");
 
-  // Current tab list
+  // Get current tab list
   const currentList = activeTab === "plan" ? plan : saved;
 
-  // Filter workouts
+  // Filter by workout name or muscle group
   const filteredList = currentList.filter((workout) => {
     const searchText = search.toLowerCase();
 
@@ -36,22 +36,22 @@ const MyPlanPage = () => {
     );
   });
 
-  // Current tab sorting option
+  // Get current tab's sorting option
   const sortBy = activeTab === "plan" ? planSortBy : savedSortBy;
 
-  // Total minutes
+  // Calculate total minutes
   const totalMinutes = currentList.reduce(
     (total, workout) => total + workout.duration,
     0,
   );
 
-  // Total calories
+  // Calculate total calories
   const totalCalories = currentList.reduce(
     (total, workout) => total + workout.caloriesBurned,
     0,
   );
 
-  // Sort workouts
+  // Sort filtered list
   const sortedList = [...filteredList].sort((a, b) => {
     switch (sortBy) {
       case "duration":
@@ -114,7 +114,7 @@ const MyPlanPage = () => {
               </p>
 
               <p className="mt-2 text-3xl font-bold text-[#CCFF00] transition duration-300 group-hover:scale-110 sm:text-4xl">
-                {currentList.length}
+                {hydrated ? currentList.length : 0}
               </p>
             </div>
 
@@ -125,7 +125,7 @@ const MyPlanPage = () => {
               </p>
 
               <p className="mt-2 text-3xl font-bold text-white transition duration-300 group-hover:scale-110 group-hover:text-[#ccff00] sm:text-4xl">
-                {totalMinutes}
+                {hydrated ? totalMinutes : 0}
               </p>
             </div>
 
@@ -136,7 +136,7 @@ const MyPlanPage = () => {
               </p>
 
               <p className="mt-2 text-3xl font-bold text-white transition duration-300 group-hover:scale-110 group-hover:text-[#ccff00] sm:text-4xl">
-                {totalCalories}
+                {hydrated ? totalCalories : 0}
               </p>
             </div>
           </div>
@@ -234,8 +234,9 @@ const MyPlanPage = () => {
           </div>
         </div>
 
-        {/* Loading State */}
-        {loading ? (
+        {/* Loading / Empty / Workout List */}
+        {!hydrated ? (
+          /* Loading State */
           <div className="flex min-h-[300px] items-center justify-center rounded-2xl border border-zinc-800 bg-[#111317]">
             <div className="text-center">
               <div className="mx-auto mb-5 h-10 w-10 animate-spin rounded-full border-4 border-zinc-700 border-t-[#ccff00]" />
@@ -249,7 +250,7 @@ const MyPlanPage = () => {
           /* Empty State */
           <div className="rounded-2xl border border-zinc-800 bg-[#111317] px-6 py-20 text-center transition duration-300 hover:border-[#ccff00]/40 hover:shadow-[0_10px_30px_rgba(204,255,0,0.05)]">
             <h2 className="text-3xl font-bold uppercase text-white transition duration-300 hover:text-[#ccff00]">
-              {search ? "No Workouts Found" : "Nothing Here Yet"}
+              {search ? "No Workouts Found" : "NOTHING HERE YET"}
             </h2>
 
             <p className="mt-4 text-[#A1A1A1] transition duration-300 hover:text-white">
@@ -263,11 +264,6 @@ const MyPlanPage = () => {
               className="mt-8 inline-flex items-center gap-2 rounded-xl border border-transparent bg-[#ccff00] px-8 py-3 text-sm font-bold uppercase text-black transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:border-white hover:bg-[#d4ff33] hover:shadow-[0_8px_20px_rgba(204,255,0,0.25)] active:translate-y-0 active:scale-95"
             >
               Go to workouts
-              <ArrowRight
-                size={18}
-                strokeWidth={2.5}
-                className="transition-transform duration-300 group-hover:rotate-6"
-              />
             </Link>
           </div>
         ) : (
