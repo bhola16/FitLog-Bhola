@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, X } from "lucide-react";
+import { ArrowRight, ChevronDown, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { Bounce, toast } from "react-toastify";
@@ -261,9 +261,14 @@ const MyPlanPage = () => {
 
             <Link
               href="/"
-              className="mt-8 inline-flex items-center gap-2 rounded-xl border border-transparent bg-[#ccff00] px-8 py-3 text-sm font-bold uppercase text-black transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:border-white hover:bg-[#d4ff33] hover:shadow-[0_8px_20px_rgba(204,255,0,0.25)] active:translate-y-0 active:scale-95"
+              className="group mt-8 inline-flex items-center gap-2 rounded-xl border border-transparent bg-[#ccff00] px-8 py-3 text-sm font-bold uppercase text-black transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:border-white hover:bg-[#d4ff33] hover:shadow-[0_8px_20px_rgba(204,255,0,0.25)] active:translate-y-0 active:scale-95"
             >
               Go to workouts
+              <ArrowRight
+                size={18}
+                strokeWidth={2.5}
+                className="transition-transform duration-300 group-hover:translate-x-1"
+              />
             </Link>
           </div>
         ) : (
