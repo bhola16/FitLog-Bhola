@@ -10,7 +10,7 @@ The application allows users to explore a workout library, search for workouts, 
 
 ## 📂 GitHub Repository
 
-**GitHub:** [FitLog](https://github.com/bhola16/FitLog)
+**GitHub:** [FitLog](https://github.com/bhola16/FitLog-Bhola)
 
 ---
 
@@ -29,20 +29,7 @@ Users can explore a collection of workouts with useful information, including:
 
 The workout information is dynamically loaded from the FitLog REST API.
 
-### 2. 🔎 Workout Search
-
-Users can quickly search for workouts using the search bar.
-
-Search works by:
-
-- Workout name
-- Muscle group
-
-The workout list updates instantly as the user types.
-
-A clear button is also available to quickly reset the search.
-
-### 3. 📋 Today's Workout Plan
+### 2. 📋 Today's Workout Plan
 
 Users can create a personalized workout plan for the day.
 
@@ -56,7 +43,7 @@ The application allows users to:
 
 If the user tries to add more than five workouts, a notification is displayed.
 
-### 4. ❤️ Saved Workouts
+### 3. ❤️ Saved Workouts
 
 Users can save workouts for later.
 
@@ -68,7 +55,7 @@ The Saved section allows users to:
 - View all saved workouts
 - Switch between Today's Plan and Saved workouts
 
-### 5. 📊 Workout Statistics
+### 4. 📊 Workout Statistics
 
 The My Plan page provides a summary of the currently selected workouts.
 
@@ -80,7 +67,7 @@ The application displays:
 
 These values are automatically updated when workouts are added or removed.
 
-### 6. ↕️ Workout Sorting
+### 5. ↕️ Workout Sorting
 
 Users can sort workouts using different criteria.
 
@@ -92,7 +79,7 @@ Available sorting options:
 
 Today's Plan and Saved workouts maintain their own sorting preferences, so changing the sorting option in one tab does not reset the other tab.
 
-### 7. 🔔 Toast Notifications
+### 6. 🔔 Toast Notifications
 
 **React-Toastify** is used to provide instant feedback for user actions.
 
@@ -105,7 +92,7 @@ Notifications are displayed when:
 - A workout is already saved
 - Workouts are sorted
 
-### 8. 📱 Responsive Design
+### 7. 📱 Responsive Design
 
 FitLog is designed to work across different screen sizes.
 
@@ -115,7 +102,7 @@ FitLog is designed to work across different screen sizes.
 
 The navigation bar also provides a hamburger menu on smaller screens.
 
-### 9. 💾 Local Storage Persistence
+### 8. 💾 Local Storage Persistence
 
 FitLog uses browser **LocalStorage** to preserve the user's workout selections.
 
@@ -126,7 +113,7 @@ The application stores:
 
 This allows the user's Today's Plan and Saved Workouts to remain available even after refreshing the browser.
 
-### 10. ⏳ Loading States
+### 9. ⏳ Loading States
 
 FitLog provides loading feedback while workout information is being prepared.
 
@@ -140,7 +127,7 @@ before the locally stored workout data has been hydrated.
 
 A loading animation is also used to provide clear visual feedback to the user.
 
-### 11. 📭 Empty States
+### 10. 📭 Empty States
 
 The application provides meaningful empty states when there are no workouts available.
 
@@ -160,7 +147,7 @@ A **Go to workouts** button allows the user to return to the workout library.
 
 Searches that produce no results display a separate **No Workouts Found** message.
 
-### 12. 📄 Workout Details
+### 11. 📄 Workout Details
 
 Users can open an individual workout to view detailed information.
 
@@ -175,6 +162,19 @@ The workout details page provides information such as:
 - Workout description
 
 Users can also perform workout-related actions from the details page.
+
+### 12. 🔎 Workout Search
+
+Users can quickly search for workouts using the search bar.
+
+Search works by:
+
+- Workout name
+- Muscle group
+
+The workout list updates instantly as the user types.
+
+A clear button is also available to quickly reset the search.
 
 ### 13. 🎨 Modern Dark UI
 
@@ -299,7 +299,7 @@ FitLog/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/bhola16/FitLog.git
+git clone https://github.com/bhola16/FitLog-Bhola
 ```
 
 ### 2. Navigate to the project directory
