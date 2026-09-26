@@ -2,32 +2,23 @@ import { IWorkoutType } from "@/type/type";
 import WorkoutLibraryClient from "./WorkoutLibraryClient";
 
 const getWorkOutsData = async (): Promise<IWorkoutType[]> => {
-  for (let attempt = 1; attempt <= 3; attempt++) {
-    try {
-      const res = await fetch("https://api.abcz.workers.dev/api/fitlog");
+  const res = await fetch("https://api.abcz.workers.dev/api/fitlog");
 
-      if (!res.ok) {
-        throw new Error("Failed to fetch workouts");
-      }
-
-      return res.json();
-    } catch (error) {
-      if (attempt === 3) {
-        throw error;
-      }
-
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-    }
+  if (!res.ok) {
+    throw new Error("Failed to fetch workouts");
   }
 
-  throw new Error("Failed to fetch workouts");
+  return res.json();
 };
 
 const WorkoutLibrary = async () => {
   const workOutsDatas = await getWorkOutsData();
 
   return (
-    <section className="group mx-4 my-8 transition duration-300 sm:mx-6 sm:my-10 lg:mx-10 lg:my-14">
+    <section
+      id="library"
+      className="group mx-4 my-8 transition duration-300 sm:mx-6 sm:my-10 lg:mx-10 lg:my-14"
+    >
       <div className="container mx-auto">
         {/* Library Header */}
         <div className="mb-6 sm:mb-8">

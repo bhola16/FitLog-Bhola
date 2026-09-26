@@ -54,8 +54,49 @@ const WorkoutLibraryClient = ({ workouts }: WorkoutLibraryClientProps) => {
             <WorkoutCard key={workOutData.id} workOutData={workOutData} />
           ))
         ) : (
-          <div className="col-span-full py-12 text-center text-zinc-400">
-            No workouts found.
+          <div className="col-span-full flex min-h-[280px] items-center justify-center">
+            <div className="group w-full max-w-xl rounded-2xl border border-zinc-800 bg-[#171a20] px-6 py-12 text-center transition-all duration-300 hover:-translate-y-1 hover:border-[#C2F800]/40 hover:shadow-[0_12px_35px_rgba(194,248,0,0.08)]">
+              {/* Icon */}
+              <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-zinc-700 bg-[#0d0f12] transition-all duration-300 group-hover:scale-110 group-hover:border-[#C2F800]/50 group-hover:bg-[#C2F800]/10">
+                <X
+                  size={28}
+                  strokeWidth={2}
+                  className="text-zinc-500 transition-all duration-300 group-hover:rotate-90 group-hover:text-[#C2F800]"
+                />
+              </div>
+
+              {/* Title */}
+              <h3 className="mb-2 text-xl font-bold uppercase text-white transition-colors duration-300 group-hover:text-[#C2F800]">
+                No Workouts Found
+              </h3>
+
+              {/* Message */}
+              <p className="mx-auto max-w-md text-sm leading-6 text-zinc-500">
+                No workouts match your search
+                {search && (
+                  <>
+                    {" "}
+                    for{" "}
+                    <span className="font-semibold text-zinc-300">
+                      &quot;{search}&quot;
+                    </span>
+                  </>
+                )}
+                .
+              </p>
+
+              {/* Clear Search Button */}
+              {search && (
+                <button
+                  type="button"
+                  onClick={() => setSearch("")}
+                  className="mt-6 inline-flex items-center gap-2 rounded-lg border border-zinc-700 bg-[#0d0f12] px-5 py-2.5 text-sm font-semibold uppercase text-zinc-300 transition-all duration-300 hover:-translate-y-1 hover:border-[#C2F800] hover:bg-[#C2F800] hover:text-black hover:shadow-[0_6px_20px_rgba(194,248,0,0.2)] active:translate-y-0"
+                >
+                  <X size={16} />
+                  Clear Search
+                </button>
+              )}
+            </div>
           </div>
         )}
       </div>

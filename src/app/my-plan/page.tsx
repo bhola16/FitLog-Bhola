@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, X } from "lucide-react";
+import { ArrowRight, ChevronDown, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { Bounce, toast } from "react-toastify";
@@ -10,21 +10,21 @@ import { useFitLog } from "../contex/FitLogContex";
 type SortOption = "duration" | "calories" | "rating";
 
 const MyPlanPage = () => {
-  const { plan, saved } = useFitLog();
+  const { plan, saved, loading } = useFitLog();
 
   const [activeTab, setActiveTab] = useState<"plan" | "saved">("plan");
 
-  // Search state
   const [search, setSearch] = useState("");
 
   // Separate sorting state for each tab
   const [planSortBy, setPlanSortBy] = useState<SortOption>("duration");
+
   const [savedSortBy, setSavedSortBy] = useState<SortOption>("duration");
 
-  // Get current tab list
+  // Current tab list
   const currentList = activeTab === "plan" ? plan : saved;
 
-  // Filter by workout name or muscle group
+  // Filter workouts
   const filteredList = currentList.filter((workout) => {
     const searchText = search.toLowerCase();
 
@@ -36,22 +36,22 @@ const MyPlanPage = () => {
     );
   });
 
-  // Get current tab's sorting option
+  // Current tab sorting option
   const sortBy = activeTab === "plan" ? planSortBy : savedSortBy;
 
-  // Calculate total minutes
+  // Total minutes
   const totalMinutes = currentList.reduce(
     (total, workout) => total + workout.duration,
     0,
   );
 
-  // Calculate total calories
+  // Total calories
   const totalCalories = currentList.reduce(
     (total, workout) => total + workout.caloriesBurned,
     0,
   );
 
-  // Sort filtered list
+  // Sort workouts
   const sortedList = [...filteredList].sort((a, b) => {
     switch (sortBy) {
       case "duration":
@@ -146,7 +146,9 @@ const MyPlanPage = () => {
         <div className="mb-8 flex flex-col gap-4 rounded-2xl p-2 sm:flex-row sm:items-center sm:justify-between">
           {/* Tabs */}
           <div className="flex gap-4 rounded-2xl border border-[#8A92A0]/30 px-4 py-2 transition duration-300 hover:border-[#ccff00]/40">
+            {/* Today's Plan */}
             <button
+              type="button"
               onClick={() => setActiveTab("plan")}
               className={`rounded-2xl border px-8 py-2 text-sm font-bold uppercase transition duration-200 hover:-translate-y-0.5 ${
                 activeTab === "plan"
@@ -157,7 +159,9 @@ const MyPlanPage = () => {
               Today&apos;s Plan
             </button>
 
+            {/* Saved */}
             <button
+              type="button"
               onClick={() => setActiveTab("saved")}
               className={`rounded-2xl border px-8 py-2 text-sm font-bold uppercase transition duration-200 hover:-translate-y-0.5 ${
                 activeTab === "saved"
@@ -177,6 +181,7 @@ const MyPlanPage = () => {
             >
               Sort By
             </label>
+
             <div className="group relative">
               <select
                 id="sort"
@@ -187,9 +192,11 @@ const MyPlanPage = () => {
                 <option value="duration" className="bg-[#171a20] text-white">
                   Duration
                 </option>
+
                 <option value="calories" className="bg-[#171a20] text-white">
                   Calories
                 </option>
+
                 <option value="rating" className="bg-[#171a20] text-white">
                   Rating
                 </option>
@@ -201,8 +208,6 @@ const MyPlanPage = () => {
               />
             </div>
           </div>
-
-          {/* //// */}
         </div>
 
         {/* Search */}
@@ -229,24 +234,40 @@ const MyPlanPage = () => {
           </div>
         </div>
 
-        {/* Empty State */}
-        {sortedList.length === 0 ? (
-          <div className="rounded-2xl border border-zinc-800 bg-[#111317] px-6 py-20 text-center transition duration-300 hover:border-zinc-600">
+        {/* Loading State */}
+        {loading ? (
+          <div className="flex min-h-[300px] items-center justify-center rounded-2xl border border-zinc-800 bg-[#111317]">
+            <div className="text-center">
+              <div className="mx-auto mb-5 h-10 w-10 animate-spin rounded-full border-4 border-zinc-700 border-t-[#ccff00]" />
+
+              <p className="text-sm font-semibold uppercase tracking-wide text-[#A1A1A1]">
+                Loading workouts…
+              </p>
+            </div>
+          </div>
+        ) : sortedList.length === 0 ? (
+          /* Empty State */
+          <div className="rounded-2xl border border-zinc-800 bg-[#111317] px-6 py-20 text-center transition duration-300 hover:border-[#ccff00]/40 hover:shadow-[0_10px_30px_rgba(204,255,0,0.05)]">
             <h2 className="text-3xl font-bold uppercase text-white transition duration-300 hover:text-[#ccff00]">
               {search ? "No Workouts Found" : "Nothing Here Yet"}
             </h2>
 
-            <p className="mt-4 text-[#A1A1A1] hover:text-[#ccff00]">
+            <p className="mt-4 text-[#A1A1A1] transition duration-300 hover:text-white">
               {search
                 ? "Try searching with another workout name or muscle group."
                 : "Browse the library and add a lift to get today moving."}
             </p>
 
             <Link
-              href="/workouts"
-              className="mt-8 inline-block rounded-4xl border border-transparent bg-[#ccff00] px-8 py-3 text-sm font-bold text-black transition duration-200 hover:-translate-y-1 hover:border-white hover:bg-[#d4ff33] hover:shadow-[0_8px_20px_rgba(204,255,0,0.2)]"
+              href="/"
+              className="mt-8 inline-flex items-center gap-2 rounded-xl border border-transparent bg-[#ccff00] px-8 py-3 text-sm font-bold uppercase text-black transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:border-white hover:bg-[#d4ff33] hover:shadow-[0_8px_20px_rgba(204,255,0,0.25)] active:translate-y-0 active:scale-95"
             >
               Go to workouts
+              <ArrowRight
+                size={18}
+                strokeWidth={2.5}
+                className="transition-transform duration-300 group-hover:rotate-6"
+              />
             </Link>
           </div>
         ) : (
